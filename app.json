@@ -1,0 +1,1345 @@
+{
+  "id": "ai-merchant-chargeback-vamp-control-center",
+  "title": "DisputeGuard VAMP Control Center",
+  "tagline": "Chargeback prevention, representment, and merchant monitoring intelligence",
+  "industry": "Payments and Merchant Risk",
+  "port": 4512,
+  "accent": "#7c3aed",
+  "valueLabel": "Revenue protected",
+  "value": "$2.3M",
+  "workflows": [
+    {
+      "id": "vamp-monitor",
+      "title": "VAMP Ratio Monitor",
+      "description": "Monitor fraud and dispute ratios by merchant, descriptor, region, and channel.",
+      "fields": [
+        {
+          "key": "merchantId",
+          "label": "Merchant ID",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "period",
+          "label": "Monitoring Period",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "transactionCount",
+          "label": "Transaction Count",
+          "type": "number",
+          "required": true
+        },
+        {
+          "key": "disputeCount",
+          "label": "Dispute Count",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "merchantId": "Merchant ID STD-2026-104",
+            "period": "Monitoring Period STD-2026-104",
+            "transactionCount": 125,
+            "disputeCount": 125
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "merchantId": "Merchant ID RISK-2026-227",
+            "period": "Monitoring Period RISK-2026-227",
+            "transactionCount": 975,
+            "disputeCount": 975
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "merchantId": "Merchant ID EXC-2026-319",
+            "period": "Monitoring Period EXC-2026-319",
+            "transactionCount": 41,
+            "disputeCount": 41
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "representment",
+      "title": "Representment Builder",
+      "description": "Assemble reason-code-specific evidence and a concise representment narrative.",
+      "fields": [
+        {
+          "key": "disputeId",
+          "label": "Dispute ID",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "reasonCode",
+          "label": "Reason Code",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "transactionAmount",
+          "label": "Transaction Amount",
+          "type": "currency",
+          "required": true
+        },
+        {
+          "key": "evidenceSummary",
+          "label": "Evidence Summary",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "disputeId": "Dispute ID STD-2026-104",
+            "reasonCode": "Reason Code STD-2026-104",
+            "transactionAmount": 285000,
+            "evidenceSummary": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "disputeId": "Dispute ID RISK-2026-227",
+            "reasonCode": "Reason Code RISK-2026-227",
+            "transactionAmount": 875000,
+            "evidenceSummary": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "disputeId": "Dispute ID EXC-2026-319",
+            "reasonCode": "Reason Code EXC-2026-319",
+            "transactionAmount": 142500,
+            "evidenceSummary": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "prevention",
+      "title": "Chargeback Prevention Review",
+      "description": "Identify preventable disputes and prescribe operational interventions.",
+      "fields": [
+        {
+          "key": "merchant",
+          "label": "Merchant",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "descriptor",
+          "label": "Billing Descriptor",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "disputePattern",
+          "label": "Dispute Pattern",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "key": "channel",
+          "label": "Channel",
+          "type": "select",
+          "required": false,
+          "options": [
+            "E-commerce",
+            "Card present",
+            "Subscription",
+            "Marketplace"
+          ]
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "merchant": "Merchant STD-2026-104",
+            "descriptor": "Billing Descriptor STD-2026-104",
+            "disputePattern": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "channel": "Marketplace"
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "merchant": "Merchant RISK-2026-227",
+            "descriptor": "Billing Descriptor RISK-2026-227",
+            "disputePattern": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "channel": "Marketplace"
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "merchant": "Merchant EXC-2026-319",
+            "descriptor": "Billing Descriptor EXC-2026-319",
+            "disputePattern": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "channel": "Marketplace"
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "fraud-signal",
+      "title": "Fraud Signal Triage",
+      "description": "Triage enumeration, account takeover, friendly fraud, and transaction anomalies.",
+      "fields": [
+        {
+          "key": "signalId",
+          "label": "Signal ID",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "signalType",
+          "label": "Signal Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Enumeration",
+            "Account takeover",
+            "Friendly fraud",
+            "Velocity"
+          ]
+        },
+        {
+          "key": "riskLevel",
+          "label": "Risk Level",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Low",
+            "Moderate",
+            "High",
+            "Critical"
+          ]
+        },
+        {
+          "key": "signalEvidence",
+          "label": "Signal Evidence",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "signalId": "Signal ID STD-2026-104",
+            "signalType": "Account takeover",
+            "riskLevel": "High",
+            "signalEvidence": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "signalId": "Signal ID RISK-2026-227",
+            "signalType": "Account takeover",
+            "riskLevel": "Critical",
+            "signalEvidence": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "signalId": "Signal ID EXC-2026-319",
+            "signalType": "Account takeover",
+            "riskLevel": "High",
+            "signalEvidence": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "alert-response",
+      "title": "Monitoring Alert Response",
+      "description": "Coordinate acquirer and merchant remediation for monitoring-program alerts.",
+      "fields": [
+        {
+          "key": "alertReference",
+          "label": "Alert Reference",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "program",
+          "label": "Program",
+          "type": "select",
+          "required": true,
+          "options": [
+            "VAMP",
+            "Acquirer control",
+            "Internal threshold"
+          ]
+        },
+        {
+          "key": "responseDue",
+          "label": "Response Due",
+          "type": "date",
+          "required": true
+        },
+        {
+          "key": "remediationPlan",
+          "label": "Remediation Plan",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "alertReference": "Alert Reference STD-2026-104",
+            "program": "Acquirer control",
+            "responseDue": "2026-09-08",
+            "remediationPlan": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "alertReference": "Alert Reference RISK-2026-227",
+            "program": "Acquirer control",
+            "responseDue": "2026-08-19",
+            "remediationPlan": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "alertReference": "Alert Reference EXC-2026-319",
+            "program": "Acquirer control",
+            "responseDue": "2026-08-10",
+            "remediationPlan": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "merchant-onboarding",
+      "title": "Merchant Risk Onboarding",
+      "description": "Assess business model, fulfillment, refund policy, and dispute exposure before activation.",
+      "fields": [
+        {
+          "key": "merchant",
+          "label": "Merchant",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "businessModel",
+          "label": "Business Model",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "monthlyVolume",
+          "label": "Monthly Volume",
+          "type": "currency",
+          "required": true
+        },
+        {
+          "key": "riskNotes",
+          "label": "Risk Notes",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "merchant": "Merchant STD-2026-104",
+            "businessModel": "Business Model STD-2026-104",
+            "monthlyVolume": 285000,
+            "riskNotes": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "merchant": "Merchant RISK-2026-227",
+            "businessModel": "Business Model RISK-2026-227",
+            "monthlyVolume": 875000,
+            "riskNotes": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "merchant": "Merchant EXC-2026-319",
+            "businessModel": "Business Model EXC-2026-319",
+            "monthlyVolume": 142500,
+            "riskNotes": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "recovery",
+      "title": "Recovery Performance Analysis",
+      "description": "Measure win rate, net recovery, evidence quality, and reason-code leakage.",
+      "fields": [
+        {
+          "key": "portfolio",
+          "label": "Portfolio",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "period",
+          "label": "Period",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "submittedAmount",
+          "label": "Submitted Amount",
+          "type": "currency",
+          "required": true
+        },
+        {
+          "key": "recoveredAmount",
+          "label": "Recovered Amount",
+          "type": "currency",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "portfolio": "Portfolio STD-2026-104",
+            "period": "Period STD-2026-104",
+            "submittedAmount": 285000,
+            "recoveredAmount": 285000
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "portfolio": "Portfolio RISK-2026-227",
+            "period": "Period RISK-2026-227",
+            "submittedAmount": 875000,
+            "recoveredAmount": 875000
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "portfolio": "Portfolio EXC-2026-319",
+            "period": "Period EXC-2026-319",
+            "submittedAmount": 142500,
+            "recoveredAmount": 142500
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "Dispute Policy Optimization",
+      "description": "Generate changes to refund, cancellation, delivery, and descriptor policies.",
+      "fields": [
+        {
+          "key": "policyArea",
+          "label": "Policy Area",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Refunds",
+            "Cancellation",
+            "Delivery",
+            "Descriptor"
+          ]
+        },
+        {
+          "key": "currentPolicy",
+          "label": "Current Policy",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "key": "observedIssue",
+          "label": "Observed Issue",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "key": "owner",
+          "label": "Policy Owner",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "policyArea": "Refunds",
+            "currentPolicy": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "observedIssue": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "owner": "Policy Owner STD-2026-104"
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "policyArea": "Refunds",
+            "currentPolicy": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "observedIssue": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "owner": "Policy Owner RISK-2026-227"
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "policyArea": "Refunds",
+            "currentPolicy": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "observedIssue": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis.",
+            "owner": "Policy Owner EXC-2026-319"
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "vamp-monitor",
+      "title": "VAMP Ratio Monitor Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for vamp ratio monitor.",
+      "table": "op_vamp_monitor",
+      "columns": [
+        {
+          "key": "merchantId",
+          "label": "Merchant ID",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_merchantId"
+        },
+        {
+          "key": "period",
+          "label": "Monitoring Period",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_period"
+        },
+        {
+          "key": "transactionCount",
+          "label": "Transaction Count",
+          "type": "number",
+          "required": true,
+          "dbKey": "data_transactionCount"
+        },
+        {
+          "key": "disputeCount",
+          "label": "Dispute Count",
+          "type": "number",
+          "required": false,
+          "dbKey": "data_disputeCount"
+        }
+      ]
+    },
+    {
+      "id": "representment",
+      "title": "Representment Builder Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for representment builder.",
+      "table": "op_representment",
+      "columns": [
+        {
+          "key": "disputeId",
+          "label": "Dispute ID",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_disputeId"
+        },
+        {
+          "key": "reasonCode",
+          "label": "Reason Code",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_reasonCode"
+        },
+        {
+          "key": "transactionAmount",
+          "label": "Transaction Amount",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_transactionAmount"
+        },
+        {
+          "key": "evidenceSummary",
+          "label": "Evidence Summary",
+          "type": "textarea",
+          "required": false,
+          "dbKey": "data_evidenceSummary"
+        }
+      ]
+    },
+    {
+      "id": "prevention",
+      "title": "Chargeback Prevention Review Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for chargeback prevention review.",
+      "table": "op_prevention",
+      "columns": [
+        {
+          "key": "merchant",
+          "label": "Merchant",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_merchant"
+        },
+        {
+          "key": "descriptor",
+          "label": "Billing Descriptor",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_descriptor"
+        },
+        {
+          "key": "disputePattern",
+          "label": "Dispute Pattern",
+          "type": "textarea",
+          "required": true,
+          "dbKey": "data_disputePattern"
+        },
+        {
+          "key": "channel",
+          "label": "Channel",
+          "type": "select",
+          "required": false,
+          "options": [
+            "E-commerce",
+            "Card present",
+            "Subscription",
+            "Marketplace"
+          ],
+          "dbKey": "data_channel"
+        }
+      ]
+    },
+    {
+      "id": "fraud-signal",
+      "title": "Fraud Signal Triage Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for fraud signal triage.",
+      "table": "op_fraud_signal",
+      "columns": [
+        {
+          "key": "signalId",
+          "label": "Signal ID",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_signalId"
+        },
+        {
+          "key": "signalType",
+          "label": "Signal Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Enumeration",
+            "Account takeover",
+            "Friendly fraud",
+            "Velocity"
+          ],
+          "dbKey": "data_signalType"
+        },
+        {
+          "key": "riskLevel",
+          "label": "Risk Level",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Low",
+            "Moderate",
+            "High",
+            "Critical"
+          ],
+          "dbKey": "data_riskLevel"
+        },
+        {
+          "key": "signalEvidence",
+          "label": "Signal Evidence",
+          "type": "textarea",
+          "required": false,
+          "dbKey": "data_signalEvidence"
+        }
+      ]
+    },
+    {
+      "id": "alert-response",
+      "title": "Monitoring Alert Response Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for monitoring alert response.",
+      "table": "op_alert_response",
+      "columns": [
+        {
+          "key": "alertReference",
+          "label": "Alert Reference",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_alertReference"
+        },
+        {
+          "key": "program",
+          "label": "Program",
+          "type": "select",
+          "required": true,
+          "options": [
+            "VAMP",
+            "Acquirer control",
+            "Internal threshold"
+          ],
+          "dbKey": "data_program"
+        },
+        {
+          "key": "responseDue",
+          "label": "Response Due",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_responseDue"
+        },
+        {
+          "key": "remediationPlan",
+          "label": "Remediation Plan",
+          "type": "textarea",
+          "required": false,
+          "dbKey": "data_remediationPlan"
+        }
+      ]
+    },
+    {
+      "id": "merchant-onboarding",
+      "title": "Merchant Risk Onboarding Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for merchant risk onboarding.",
+      "table": "op_merchant_onboarding",
+      "columns": [
+        {
+          "key": "merchant",
+          "label": "Merchant",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_merchant"
+        },
+        {
+          "key": "businessModel",
+          "label": "Business Model",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_businessModel"
+        },
+        {
+          "key": "monthlyVolume",
+          "label": "Monthly Volume",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_monthlyVolume"
+        },
+        {
+          "key": "riskNotes",
+          "label": "Risk Notes",
+          "type": "textarea",
+          "required": false,
+          "dbKey": "data_riskNotes"
+        }
+      ]
+    },
+    {
+      "id": "recovery",
+      "title": "Recovery Performance Analysis Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for recovery performance analysis.",
+      "table": "op_recovery",
+      "columns": [
+        {
+          "key": "portfolio",
+          "label": "Portfolio",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_portfolio"
+        },
+        {
+          "key": "period",
+          "label": "Period",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_period"
+        },
+        {
+          "key": "submittedAmount",
+          "label": "Submitted Amount",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_submittedAmount"
+        },
+        {
+          "key": "recoveredAmount",
+          "label": "Recovered Amount",
+          "type": "currency",
+          "required": false,
+          "dbKey": "data_recoveredAmount"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "Dispute Policy Optimization Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for dispute policy optimization.",
+      "table": "op_policy",
+      "columns": [
+        {
+          "key": "policyArea",
+          "label": "Policy Area",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Refunds",
+            "Cancellation",
+            "Delivery",
+            "Descriptor"
+          ],
+          "dbKey": "data_policyArea"
+        },
+        {
+          "key": "currentPolicy",
+          "label": "Current Policy",
+          "type": "textarea",
+          "required": true,
+          "dbKey": "data_currentPolicy"
+        },
+        {
+          "key": "observedIssue",
+          "label": "Observed Issue",
+          "type": "textarea",
+          "required": true,
+          "dbKey": "data_observedIssue"
+        },
+        {
+          "key": "owner",
+          "label": "Policy Owner",
+          "type": "text",
+          "required": false,
+          "dbKey": "data_owner"
+        }
+      ]
+    },
+    {
+      "id": "merchant-portfolio",
+      "title": "Merchant Portfolio",
+      "description": "Merchant descriptors, channels, volumes, acquirers, and monitoring status.",
+      "table": "op_merchant_portfolio",
+      "columns": [
+        {
+          "key": "merchantId",
+          "label": "Merchant ID",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_merchantId"
+        },
+        {
+          "key": "merchant",
+          "label": "Merchant",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_merchant"
+        },
+        {
+          "key": "channel",
+          "label": "Channel",
+          "type": "select",
+          "required": true,
+          "options": [
+            "E-commerce",
+            "Card present",
+            "Subscription",
+            "Marketplace"
+          ],
+          "dbKey": "data_channel"
+        },
+        {
+          "key": "monthlyVolume",
+          "label": "Monthly Volume",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_monthlyVolume"
+        }
+      ]
+    },
+    {
+      "id": "reason-codes",
+      "title": "Dispute Reason Code Library",
+      "description": "Network reason codes, evidence requirements, deadlines, and response strategy.",
+      "table": "op_reason_codes",
+      "columns": [
+        {
+          "key": "network",
+          "label": "Network",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_network"
+        },
+        {
+          "key": "reasonCode",
+          "label": "Reason Code",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_reasonCode"
+        },
+        {
+          "key": "responseDays",
+          "label": "Response Days",
+          "type": "number",
+          "required": true,
+          "dbKey": "data_responseDays"
+        },
+        {
+          "key": "requiredEvidence",
+          "label": "Required Evidence",
+          "type": "textarea",
+          "required": true,
+          "dbKey": "data_requiredEvidence"
+        }
+      ]
+    },
+    {
+      "id": "acquirer-alerts",
+      "title": "Acquirer Alert Register",
+      "description": "Monitoring alerts, ratios, response dates, and remediation status.",
+      "table": "op_acquirer_alerts",
+      "columns": [
+        {
+          "key": "acquirer",
+          "label": "Acquirer",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_acquirer"
+        },
+        {
+          "key": "alertType",
+          "label": "Alert Type",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_alertType"
+        },
+        {
+          "key": "ratioBps",
+          "label": "Ratio (bps)",
+          "type": "number",
+          "required": true,
+          "dbKey": "data_ratioBps"
+        },
+        {
+          "key": "responseDue",
+          "label": "Response Due",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_responseDue"
+        }
+      ]
+    },
+    {
+      "id": "evidence-templates",
+      "title": "Representment Evidence Templates",
+      "description": "Reusable evidence packages by reason code and commerce model.",
+      "table": "op_evidence_templates",
+      "columns": [
+        {
+          "key": "template",
+          "label": "Template",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_template"
+        },
+        {
+          "key": "reasonCode",
+          "label": "Reason Code",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_reasonCode"
+        },
+        {
+          "key": "businessModel",
+          "label": "Business Model",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_businessModel"
+        },
+        {
+          "key": "evidenceChecklist",
+          "label": "Evidence Checklist",
+          "type": "textarea",
+          "required": true,
+          "dbKey": "data_evidenceChecklist"
+        }
+      ]
+    }
+  ],
+  "domainProduct": {
+    "home": "VAMP & Dispute Control Center",
+    "context": "Visa monitoring ratios, dispute evidence, representment deadlines, merchant remediation, and acquirer governance.",
+    "features": [
+      {
+        "id": "vamp-monitor",
+        "title": "VAMP Ratio Monitor",
+        "description": "Monitor fraud and dispute ratios by merchant, descriptor, acquirer, region, and Visa monitoring period.",
+        "view": "control",
+        "modules": [
+          "vamp-monitor",
+          "merchant-portfolio"
+        ],
+        "actions": [
+          {
+            "id": "acknowledge-breach",
+            "label": "Acknowledge Ratio Breach",
+            "nextStatus": "Review",
+            "auditDetail": "Acknowledged the monitoring breach and assigned accountable remediation."
+          },
+          {
+            "id": "clear-monitoring",
+            "label": "Clear Monitoring Alert",
+            "nextStatus": "Approved",
+            "auditDetail": "Cleared the alert after ratio and data-source validation."
+          }
+        ]
+      },
+      {
+        "id": "dispute-triage",
+        "title": "Dispute Intake & Triage",
+        "description": "Normalize disputes, reason codes, transaction history, customer contacts, and response deadlines.",
+        "view": "deadline",
+        "modules": [
+          "prevention",
+          "reason-codes"
+        ],
+        "actions": [
+          {
+            "id": "accept-dispute",
+            "label": "Accept for Representment",
+            "nextStatus": "Investigating",
+            "auditDetail": "Accepted the dispute for representment based on eligibility and value."
+          },
+          {
+            "id": "write-off",
+            "label": "Approve Commercial Write-Off",
+            "nextStatus": "Closed",
+            "auditDetail": "Approved a controlled write-off where representment was not economic."
+          }
+        ]
+      },
+      {
+        "id": "evidence-pack",
+        "title": "Compelling Evidence Assembly",
+        "description": "Assemble order, authentication, device, fulfillment, refund-policy, and customer-communication evidence by reason code.",
+        "view": "evidence",
+        "modules": [
+          "representment",
+          "evidence-templates"
+        ],
+        "actions": [
+          {
+            "id": "validate-evidence",
+            "label": "Validate Evidence Package",
+            "nextStatus": "Review",
+            "auditDetail": "Validated required compelling evidence against the network reason code."
+          },
+          {
+            "id": "seal-package",
+            "label": "Seal Representment Package",
+            "nextStatus": "Approved",
+            "auditDetail": "Sealed the immutable representment evidence package."
+          }
+        ]
+      },
+      {
+        "id": "representment",
+        "title": "Representment Submission",
+        "description": "Control response windows, narrative approval, amount, network submission, and outcome tracking.",
+        "view": "board",
+        "modules": [
+          "representment",
+          "reason-codes"
+        ],
+        "actions": [
+          {
+            "id": "submit-network",
+            "label": "Submit Representment",
+            "nextStatus": "Approved",
+            "auditDetail": "Submitted the representment package within the network response window."
+          },
+          {
+            "id": "request-rework",
+            "label": "Return for Evidence Rework",
+            "nextStatus": "Investigating",
+            "auditDetail": "Returned the package for missing or contradictory evidence."
+          }
+        ]
+      },
+      {
+        "id": "merchant-remediation",
+        "title": "Merchant Remediation Plan",
+        "description": "Track root causes across fraud, fulfillment, descriptor, cancellation, and policy controls with acquirer evidence.",
+        "view": "board",
+        "modules": [
+          "alert-response",
+          "acquirer-alerts"
+        ],
+        "actions": [
+          {
+            "id": "approve-control",
+            "label": "Approve Remediation Control",
+            "nextStatus": "Approved",
+            "auditDetail": "Approved merchant remediation after control evidence review."
+          },
+          {
+            "id": "extend-monitoring",
+            "label": "Extend Enhanced Monitoring",
+            "nextStatus": "Investigating",
+            "auditDetail": "Extended enhanced monitoring because target ratios were not sustained."
+          }
+        ]
+      }
+    ]
+  },
+  "integrations": [
+    {
+      "id": "integration-1",
+      "name": "Visa dispute feed",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-2",
+      "name": "Payment gateway",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-3",
+      "name": "Order management",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-4",
+      "name": "Fraud decisioning",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-5",
+      "name": "Customer support platform",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    }
+  ],
+  "featureCount": 40,
+  "seededRecords": 300,
+  "demoUsers": 3,
+  "apiPort": 5512,
+  "dbName": "profit_ai_merchant_chargeback_vamp_control_center"
+}
