@@ -7,6 +7,15 @@
   "accent": "#7c3aed",
   "valueLabel": "Revenue protected",
   "value": "$2.3M",
+  "commercialExtension": {
+    "title": "VAMP Exposure & Remediation Lab",
+    "summary": "Forecast merchant exposure, quantify preventable loss, and plan processor-grade fraud, dispute, and enumeration feeds.",
+    "baselineLabel": "Annual card-not-present volume", "volumeLabel": "Annual settled transactions", "unitValueLabel": "Average order value", "opportunityRateLabel": "Fraud / dispute rate", "captureRateLabel": "Preventable share",
+    "defaults": { "volume": 900000, "unitValue": 82, "opportunityRate": 0.9, "captureRate": 35 },
+    "pricing": "Monthly fee by merchant volume with a performance tier tied to avoided disputes and recovered representments.",
+    "milestones": ["Connect one processor settlement and dispute feed", "Reproduce VAMP ratios and threshold forecasts", "Launch reason-code remediation and representment queue", "Track avoided loss and merchant remediation outcomes"],
+    "connectors": [{"name":"Processor settlement feed","status":"Pilot","purpose":"TC05-style settled transaction denominator","evidence":"Merchant, descriptor, channel, region, and settled timestamp"},{"name":"Fraud and dispute feed","status":"Planned","purpose":"TC40/TC15-style numerator and outcomes","evidence":"Stable case IDs, reason codes, amounts, and lifecycle events"},{"name":"Enumeration telemetry","status":"Planned","purpose":"Authorization attack detection","evidence":"Approved and declined attempts with device and velocity evidence"}]
+  },
   "workflows": [
     {
       "id": "vamp-monitor",
