@@ -1,22 +1,58 @@
-# DisputeGuard VAMP Control Center
+# Chargeback VAMP Command
 
-Chargeback prevention, representment, and merchant monitoring intelligence.
+Detects dispute patterns, compiles representment evidence, monitors VAMP ratios against the 150 bps threshold effective April 2026, and prevents merchant monitoring penalties.
 
-Full React, Node/Express, PostgreSQL, and OpenRouter implementation with 5 native business capabilities, 10 stateful domain decisions, 8 specialized AI workflows, 12 physical domain tables, 300 seeded records, reports, clickable audit history, integration controls, three local roles, and three full-field scenario fillers per AI feature.
+Stack: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4, Prisma,
+PostgreSQL, NextAuth credentials, and OpenRouter for AI workflows. Structure
+and conventions mirror the `beautyhqio` reference application.
 
-## Configure and run
+## Features
+- Dispute-pattern detection across merchants
+- Representment evidence compilation
+- VAMP ratio monitoring vs. 150 bps threshold
+- Merchant monitoring penalty prevention
+- Fraud signal correlation by BIN and descriptor
+- Recovery payout tracking
+- Prevention rules and alerts
+- Acquirer reporting
+
+## Local setup
+
+1. Install Node.js 22 and PostgreSQL 17.
+2. Copy `.env.example` to `.env` and set `DATABASE_URL` plus
+   `NEXTAUTH_SECRET`. Never use the example values in production.
+3. Run:
 
 ```bash
-./start.sh
+npm install
+npx prisma migrate dev --name init
+npm run db:seed
+npm run dev
 ```
 
-Open <http://127.0.0.1:4512>. `start.sh` automatically loads the protected portfolio-level `../.openrouter.env` file, then an optional app-local `.env` override. It creates the local PostgreSQL database when needed, runs migrations, preserves existing seeded data, starts the Node API on `5512`, and starts Vite on `4512`.
+Then open <http://localhost:4611> and sign in with a seeded demo account
+(`admin@ai-merchant-chargeback-vamp-control-center.local` / `Demo!23456`).
 
-## Validate
+## Release gates
 
 ```bash
-node scripts/validate_app.mjs
-node scripts/smoke_test.mjs
+npm run typecheck
+npm run lint
+npm run build
 ```
 
-Both `.env` files are ignored. OpenRouter is called only from the backend; the API key is never sent to React.
+## AI workflows
+
+AI features call OpenRouter from API routes only; the browser never receives
+the API key. Set `OPENROUTER_API_KEY` (and optionally `OPENROUTER_MODEL`) in
+`.env`. Without a key the AI endpoints return a deterministic local analysis
+so the screens remain demonstrable offline.
+
+## Roles
+
+- `ADMIN` — full access, manages users and configuration
+- `MANAGER` — creates and edits domain records, runs AI workflows
+- `ANALYST` — read-mostly access with reporting
+
+Every mutation is recorded in the `AuditLog` table with actor, action, and
+timestamp, mirroring the auditability expectations of regulated buyers.

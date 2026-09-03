@@ -1,0 +1,214 @@
+// Generated schema — modeled after beautyhqio conventions.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(ANALYST)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  ANALYST
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actorName String?
+  action    String
+  entity    String
+  entityId  String?
+  detail    String?
+  createdAt DateTime @default(now())
+}
+
+model Merchant {
+  id        String   @id @default(cuid())
+  name String
+  descriptor String
+  mcc String
+  acquirer String
+  status String
+  monthlyVolume Float
+  region String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  transactionRecords TransactionRecord[]
+  disputes Dispute[]
+  representmentPackages RepresentmentPackage[]
+  evidenceItems EvidenceItem[]
+  fraudSignals FraudSignal[]
+  vampRatioSnapshots VampRatioSnapshot[]
+  preventionRules PreventionRule[]
+  recoveryPayouts RecoveryPayout[]
+  alertEvents AlertEvent[]
+  acquirerReports AcquirerReport[]
+  caseNotes CaseNote[]
+}
+
+model TransactionRecord {
+  id        String   @id @default(cuid())
+  cardPresent String
+  amountCents Int
+  currency String
+  authCode String
+  transactedAt DateTime?
+  threeDs Boolean
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dispute {
+  id        String   @id @default(cuid())
+  caseId String
+  reasonCode String
+  network String
+  amount Float
+  status String
+  receivedAt DateTime?
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RepresentmentPackage {
+  id        String   @id @default(cuid())
+  caseId String
+  status String
+  compellingEvidence String
+  submittedAt DateTime?
+  outcome String?
+  recoveredAmount Float
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EvidenceItem {
+  id        String   @id @default(cuid())
+  caseId String
+  kind String
+  summary String
+  source String
+  capturedAt DateTime?
+  verified Boolean
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FraudSignal {
+  id        String   @id @default(cuid())
+  signal String
+  bin String
+  severity String
+  status String
+  occurrences Int
+  firstSeen DateTime?
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VampRatioSnapshot {
+  id        String   @id @default(cuid())
+  month String
+  ratio Float
+  disputeCount Float
+  tc40Events Float
+  status String
+  basisPoints Int
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PreventionRule {
+  id        String   @id @default(cuid())
+  name String
+  trigger String
+  action String
+  enabled Boolean
+  firedCount Int
+  lastFiredAt DateTime?
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RecoveryPayout {
+  id        String   @id @default(cuid())
+  caseId String
+  amount Float
+  status String
+  paidAt DateTime?
+  feeModel String
+  feeAmount Float
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AlertEvent {
+  id        String   @id @default(cuid())
+  kind String
+  severity String
+  message String
+  status String
+  raisedAt DateTime?
+  assignee String?
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AcquirerReport {
+  id        String   @id @default(cuid())
+  acquirer String
+  period String
+  reportedRatio Float
+  reportedDisputes Int
+  status String
+  receivedAt DateTime?
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CaseNote {
+  id        String   @id @default(cuid())
+  caseId String
+  author String
+  body String
+  createdOn DateTime?
+  visibility String
+  caseRef String
+  merchantId String?
+  merchant Merchant? @relation(fields: [merchantId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
