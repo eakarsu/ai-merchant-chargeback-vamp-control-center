@@ -1,0 +1,107 @@
+{
+  "representment-builder": [
+    {
+      "id": "example-1",
+      "label": "Delivered order",
+      "values": {
+        "reasonCode": "13.1",
+        "network": "Visa",
+        "amount": "129.00 USD",
+        "availableEvidence": "Example order EX-101: carrier delivery scan, checkout consent and customer support timeline."
+      }
+    },
+    {
+      "id": "example-2",
+      "label": "Cancelled subscription",
+      "values": {
+        "reasonCode": "13.2",
+        "network": "Visa",
+        "amount": "49.00 USD",
+        "availableEvidence": "Example subscription EX-202: cancellation email, renewal date and refund policy; delivery receipt missing."
+      }
+    },
+    {
+      "id": "example-3",
+      "label": "Duplicate charge",
+      "values": {
+        "reasonCode": "12.6",
+        "network": "Visa",
+        "amount": "85.50 USD",
+        "availableEvidence": "Example purchase EX-303: two authorizations, one settlement and reversal reference; settlement evidence attached separately."
+      }
+    }
+  ],
+  "vamp-forecast": [
+    {
+      "id": "example-1",
+      "label": "Threshold screening",
+      "values": {
+        "monthToDateDisputes": "600",
+        "monthToDateFraud": "1000",
+        "monthToDateTransactions": "100000",
+        "exclusions": "0 fraud; 0 disputes",
+        "region": "US",
+        "asOfDate": "2026-09-01",
+        "calculatorResult": "Example calculator: 1600 eligible / 100000 settled × 10000 = 160 basis points. Merchant count gate 1500; screening only."
+      }
+    },
+    {
+      "id": "example-2",
+      "label": "Lower dispute volume",
+      "values": {
+        "monthToDateDisputes": "120",
+        "monthToDateFraud": "180",
+        "monthToDateTransactions": "100000",
+        "exclusions": "0 fraud; 0 disputes",
+        "region": "CANADA",
+        "asOfDate": "2026-09-01",
+        "calculatorResult": "Example calculator: 300 eligible / 100000 settled × 10000 = 30 basis points; below the supported merchant count gate."
+      }
+    },
+    {
+      "id": "example-3",
+      "label": "Exclusion review",
+      "values": {
+        "monthToDateDisputes": "700",
+        "monthToDateFraud": "1100",
+        "monthToDateTransactions": "100000",
+        "exclusions": "100 fraud; 200 disputes, subject to eligibility evidence",
+        "region": "EU",
+        "asOfDate": "2026-09-01",
+        "calculatorResult": "Example calculator: (700 + 1100 - 100 - 200) / 100000 × 10000 = 150 basis points; eligible count 1500. Verify exclusions."
+      }
+    }
+  ],
+  "dispute-pattern": [
+    {
+      "id": "example-1",
+      "label": "Descriptor confusion",
+      "values": {
+        "bins": "411111, 400000 — synthetic BIN groups",
+        "descriptors": "EXAMPLE SHOP ONLINE",
+        "window": "2026-08-01 through 2026-08-31",
+        "reasonCodes": "13.1: 32; 10.4: 18; denominators by cohort needed."
+      }
+    },
+    {
+      "id": "example-2",
+      "label": "New BIN cohort",
+      "values": {
+        "bins": "520000, 510000 — synthetic BIN groups",
+        "descriptors": "EXAMPLE MARKET",
+        "window": "2026-08-15 through 2026-08-31",
+        "reasonCodes": "10.4: 44; 12.6: 8; compare against settled volume before inferring a trend."
+      }
+    },
+    {
+      "id": "example-3",
+      "label": "Recurring payments",
+      "values": {
+        "bins": "424242, 400001 — synthetic BIN groups",
+        "descriptors": "EXAMPLE MEMBERSHIP",
+        "window": "2026-07-01 through 2026-08-31",
+        "reasonCodes": "13.2: 61; 13.1: 4; review renewal and cancellation communications."
+      }
+    }
+  ]
+}

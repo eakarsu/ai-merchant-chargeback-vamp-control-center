@@ -1,0 +1,550 @@
+{
+  "Merchant": {
+    "name": "Merchant",
+    "fields": [
+      {
+        "name": "name",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "descriptor",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "mcc",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "acquirer",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "monthlyVolume",
+        "kind": "number",
+        "required": true,
+        "min": 0
+      },
+      {
+        "name": "region",
+        "kind": "string",
+        "required": true
+      }
+    ]
+  },
+  "TransactionRecord": {
+    "name": "TransactionRecord",
+    "fields": [
+      {
+        "name": "cardPresent",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "amountCents",
+        "kind": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "currency",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "authCode",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "transactedAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "threeDs",
+        "kind": "boolean",
+        "required": true
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "Dispute": {
+    "name": "Dispute",
+    "fields": [
+      {
+        "name": "caseId",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "reasonCode",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "network",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "amount",
+        "kind": "number",
+        "required": true,
+        "min": 0
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "receivedAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "RepresentmentPackage": {
+    "name": "RepresentmentPackage",
+    "fields": [
+      {
+        "name": "caseId",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "compellingEvidence",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "submittedAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "outcome",
+        "kind": "string",
+        "required": false
+      },
+      {
+        "name": "recoveredAmount",
+        "kind": "number",
+        "required": true,
+        "min": 0
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "EvidenceItem": {
+    "name": "EvidenceItem",
+    "fields": [
+      {
+        "name": "caseId",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "kind",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "summary",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "source",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "capturedAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "verified",
+        "kind": "boolean",
+        "required": true
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "FraudSignal": {
+    "name": "FraudSignal",
+    "fields": [
+      {
+        "name": "signal",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "bin",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "severity",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "occurrences",
+        "kind": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "firstSeen",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "VampRatioSnapshot": {
+    "name": "VampRatioSnapshot",
+    "fields": [
+      {
+        "name": "month",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "ratio",
+        "kind": "number",
+        "required": true
+      },
+      {
+        "name": "disputeCount",
+        "kind": "number",
+        "required": true,
+        "min": 0
+      },
+      {
+        "name": "tc40Events",
+        "kind": "number",
+        "required": true
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "basisPoints",
+        "kind": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "PreventionRule": {
+    "name": "PreventionRule",
+    "fields": [
+      {
+        "name": "name",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "trigger",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "action",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "enabled",
+        "kind": "boolean",
+        "required": true
+      },
+      {
+        "name": "firedCount",
+        "kind": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "lastFiredAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "RecoveryPayout": {
+    "name": "RecoveryPayout",
+    "fields": [
+      {
+        "name": "caseId",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "amount",
+        "kind": "number",
+        "required": true,
+        "min": 0
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "paidAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "feeModel",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "feeAmount",
+        "kind": "number",
+        "required": true,
+        "min": 0
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "AlertEvent": {
+    "name": "AlertEvent",
+    "fields": [
+      {
+        "name": "kind",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "severity",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "message",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "raisedAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "assignee",
+        "kind": "string",
+        "required": false
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "AcquirerReport": {
+    "name": "AcquirerReport",
+    "fields": [
+      {
+        "name": "acquirer",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "period",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "reportedRatio",
+        "kind": "number",
+        "required": true
+      },
+      {
+        "name": "reportedDisputes",
+        "kind": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "status",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "receivedAt",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  },
+  "CaseNote": {
+    "name": "CaseNote",
+    "fields": [
+      {
+        "name": "caseId",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "author",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "body",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "createdOn",
+        "kind": "date",
+        "required": false
+      },
+      {
+        "name": "visibility",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "caseRef",
+        "kind": "string",
+        "required": true
+      },
+      {
+        "name": "merchantId",
+        "kind": "string",
+        "required": false,
+        "relation": "Merchant"
+      }
+    ],
+    "parent": {
+      "field": "merchantId",
+      "entity": "Merchant"
+    }
+  }
+}

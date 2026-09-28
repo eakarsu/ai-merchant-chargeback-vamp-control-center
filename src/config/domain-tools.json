@@ -1,0 +1,52 @@
+[
+  {
+    "id": "vamp",
+    "title": "VAMP merchant screening",
+    "description": "Calculate eligible fraud plus disputes using the selected region and rule date.",
+    "example": {
+      "fraud": 1000,
+      "disputes": 600,
+      "settled": 100000,
+      "excludedFraud": 0,
+      "excludedDisputes": 0,
+      "region": "US",
+      "asOf": "2026-09-01",
+      "fraudDisputeAmountUsd": 100000
+    }
+  },
+  {
+    "id": "reconcile",
+    "title": "Ledger reconciliation",
+    "description": "Compare debits and credits using integer minor units in a single currency.",
+    "example": {
+      "currency": "USD",
+      "debits": [
+        {
+          "reference": "debit-1",
+          "cents": 10000,
+          "currency": "USD"
+        }
+      ],
+      "credits": [
+        {
+          "reference": "credit-1",
+          "cents": 10000,
+          "currency": "USD"
+        }
+      ]
+    }
+  },
+  {
+    "id": "evidence-check",
+    "title": "Evidence completeness checklist",
+    "description": "Check whether supplied requirements have supporting text. Presence does not prove truth or compliance.",
+    "example": {
+      "requirements": [
+        {
+          "requirement": "Signed source record",
+          "evidence": "Source record reference and reviewer notes"
+        }
+      ]
+    }
+  }
+]

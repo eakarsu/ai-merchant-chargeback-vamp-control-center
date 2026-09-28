@@ -124,21 +124,21 @@ export const entities: Record<string, EntityConfig> = {
 export const workflows: WorkflowConfig[] = [
   {
     slug: "representment-builder",
-    title: "Representment Evidence Builder",
+    title: "Draft: Representment Evidence Builder",
     description: "Assemble the strongest evidence package for a dispute.",
     prompt: "You are a chargeback analyst. Given the reason code and available evidence, identify the matching compelling evidence (CE 3.0 eligible if applicable) and draft the representment narrative.",
     fields: ["reasonCode", "network", "amount", "availableEvidence"],
   },
   {
     slug: "vamp-forecast",
-    title: "VAMP Ratio Forecaster",
+    title: "Draft: VAMP Ratio Forecaster",
     description: "Project month-end VAMP ratio against 150 bps.",
-    prompt: "You are a payments compliance analyst. Project the month-end Visa VAMP ratio from current disputes-to-transactions pacing, and recommend controls to stay under the 150 basis point threshold effective April 2026.",
-    fields: ["monthToDateDisputes", "monthToDateTransactions", "avgDailySales", "pendingAlerts"],
+    prompt: "Explain the supplied VAMP screening inputs and deterministic calculator result. Eligible counts combine fraud TC40 and disputes TC15 over settled TC05, with evidenced exclusions. Identify missing region/date/pacing inputs. Do not substitute disputes-only arithmetic or claim an acquirer compliance determination.",
+    fields: ["monthToDateDisputes", "monthToDateFraud", "monthToDateTransactions", "exclusions", "region", "asOfDate", "calculatorResult"],
   },
   {
     slug: "dispute-pattern",
-    title: "Dispute Pattern Detector",
+    title: "Draft: Dispute Pattern Detector",
     description: "Find coordinated dispute or fraud patterns.",
     prompt: "You are a fraud investigator. Detect coordinated patterns across BINs, descriptors, and geographies in the described dispute cluster.",
     fields: ["bins", "descriptors", "window", "reasonCodes"],
